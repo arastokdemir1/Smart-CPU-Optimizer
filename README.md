@@ -1,62 +1,83 @@
-# Smart-CPU-Optimizer
-Smart optimization tool that dynamically adjusts macOS CPU priority by classifying the active application with artificial intelligence.
+# 💻 Smart Optimize: Smart Mac CPU Priority Manager
 
-# 💻 Smart Optimize: Akıllı Mac CPU Öncelik Yöneticisi
+[![ Python](https://img.shields.io/badge/Python-3.x-blue)](https://www.python.org/)
 
-[![Python](https://img.shields.io/badge/Python-3.x-blue)](https://www.python.org/)
-[![Scikit-learn](https://img.shields.io/badge/Machine%20Learning-Scikit--learn-orange)](https://scikit-learn.org/)
-[![Platform](https://img.shields.io/badge/Platform-macOS%20Only-lightgrey)](https://www.apple.com/macos)
+[![ Scikit-learn](https://img.shields.io/badge/Machine%20Learning-Scikit--learn-orange)](https://scikit-learn.org/)
 
-## ✨ Proje Hakkında
+[![ Platform](https://img.shields.io/badge/Platform-macOS%20Only-lightgrey)](https://www.apple.com/macos)
 
-**Smart Optimize**, macOS sisteminizde aktif olarak kullandığınız uygulamayı ve bağlamı (context) otomatik olarak algılayan ve buna göre CPU önceliğini (priority) dinamik olarak ayarlayan yapay zeka destekli bir araçtır.
+## ✨ About the Project
 
-Amacı, yüksek öncelikli görevlerde (Kodlama, Toplantı) sistem kaynaklarının ilgili uygulamaya tahsis edilmesini sağlayarak takılmaları azaltmak ve genel performansı optimize etmektir.
+**Smart Optimize** is an artificial intelligence-powered tool that automatically detects the application and context you are actively using on your macOS system and dynamically adjusts the CPU priority accordingly.
 
-## 🧠 Nasıl Çalışır? (AI Çekirdeği)
+Its purpose is to reduce hangs and optimize overall performance by allocating system resources to the relevant application in high priority tasks (Coding, Meeting).
 
-Proje, üç ana aşamada çalışır:
+## How Does 🧠 Work? (AI Core)
 
-1.  **Bilgi Toplama:** `osascript` (AppleScript) ve `psutil` kütüphaneleri kullanılarak şu an ön planda olan uygulamanın adı ve pencere başlığı sürekli olarak toplanır.
-2.  **Bağlam Sınıflandırma (ML Modeli):**
-    * Toplanan metin verisi, önceden eğitilmiş bir **TF-IDF Vektörleştirme** ve **Multinomial Naive Bayes (MNB)** sınıflandırıcısı tarafından analiz edilir.
-    * Uygulama, bağlamı otomatik olarak şu kategorilerden birine atar: `KODLAMA`, `TOPLANTI`, `EĞLENCE`, `SİSTEM`, `DİĞER`.
-3.  **Dinamik Optimizasyon (renice):**
-    * Sınıflandırma sonucuna göre, aktif uygulamanın PID'sine (Süreç Kimliği) `sudo renice` komutu uygulanır.
-    * Öncelik Seviyeleri:
-        * `KODLAMA` ve `TOPLANTI`: **Yüksek Öncelik** (`-10`)
-        * `EĞLENCE` ve `WEB BROWSING`: **Normal Öncelik** (`0`)
-        * `SİSTEM` ve `DİĞER`: **Düşük Öncelik** (`+10`)
+The project operates in three main stages:
 
-## 🛠️ Kurulum ve Çalıştırma
+1. **Information Collection:** Using `osascript` (AppleScript) and `psutil` libraries, the name and window title of the current application are constantly collected.
 
-### Ön Koşullar
+2. **Context Classification (ML Model):**
 
-* macOS (Bu script yalnızca macOS üzerinde çalışır.)
+* The collected text data is analyzed by a pre-trained **TF-IDF Vectorization** and **Multinomial Naive Bayes (MNB)** classifier.
+
+* The application automatically assigns the context to one of these categories: `CODING`, `MEETING`, `ENTERTAINMENT`, `SYSTEM`, `OTHER`.
+
+3. **Dynamic Optimization (renice):**
+
+* According to the classification result, the command `sudo renice` is applied to the PID (Process ID) of the active application.
+
+* Priority Levels:
+
+* `CODING` and `MEETING`: **High Priority** (`-10`)
+
+* `ENTERTAINMENT` and `WEB BROWSING`: **Normal Priority** (`0`)
+
+* `SYSTEM` and `OTHER`: **Low Priority** (`+10`)
+
+## 🛠️ Setup and Run
+
+### Prerequisites
+
+* macOS (This script only works on macOS.)
+
 * Python 3.x
 
-### Adım Adım Kurulum
+### Step by Step Installation
 
-1.  **Depoyu Klonlayın:**
-    ```bash
-    git clone [https://github.com/](https://github.com/)[KULLANICI-ADINIZ]/Smart-Optimize.git
-    cd Smart-Optimize
-    ```
+1. **Clone the Warehouse:**
 
-2.  **Gerekli Kütüphaneleri Kurun:**
-    ```bash
-    pip install -r requirements.txt
-    # veya ayrı ayrı:
-    # pip install pandas scikit-learn psutil
-    ```
+```bash
 
-3.  **Çalıştırın:**
+Git clone [https://github.com/](https://github.com/)[YOUR USER-NAME]/Smart-Optimize.git
 
-    ⚠️ **DİKKAT:** Bu script, sistem süreçlerinin önceliğini değiştirmek için `sudo renice` komutunu kullanır ve bu nedenle çalıştırılırken **yönetici parolası** gerektirir.
+Cd Smart-Optimimize
 
-    ```bash
-    python main.py
-    ```
-    *Script çalıştıktan sonra, terminal sizden şifrenizi isteyecek ve sonrasında arka planda sürekli olarak optimizasyon yapmaya başlayacaktır.*
+```
 
-## ⚙️ Gereksinimler (`requirements.txt`)
+2. **Set Up the Required Libraries:**
+
+```bash
+
+Pip install -r requirements.txt
+
+# or separately:
+
+# pip install pandas scikit-learn psutil
+
+```
+
+3. **Run:**
+
+⚠️ **CAUTION:** This script uses the command `sudo renice` to change the priority of system processes and therefore requires a **administrator password** when running.
+
+```bash
+
+Python main.py
+
+```
+
+*After the script is running, the terminal will ask you for your password and then it will start optimizing continuously in the background. *
+
+## ⚙️ Requirements (`requirements.txt`)
